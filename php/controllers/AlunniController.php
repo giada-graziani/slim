@@ -28,15 +28,16 @@ class AlunniController
       return $response->withHeader("Content-type", "application/json")->withStatus(200);
   }
 
-  /*curl -X POST localhost:8080/alunni --data '{"nome":"giada","cognome":"graziani"}' -H "Content-Type:application/json"*/
+  /*curl -X POST localhost:8080/alunni --data '{"nome":"giafdsfdfda","cognome":"grdfdfdaziani","codiceF":"nnnnnnnnnnnnnnnn"}' -H "Content-Type:application/json"*/
   public function create(Request $request, Response $response, $args){
 
     $mysqli_connection = new MySQLi('my_mariadb', 'root', 'ciccio', 'scuola');
     $body=json_decode($request->getbody()->getContents(), true);
     $nome= $body["nome"];
     $cognome=$body["cognome"];
+    $codiceF=$body["codiceF"];
 
-    $result = $mysqli_connection->query("INSERT INTO alunni(nome,cognome) VALUES('$nome','$cognome')");
+    $result = $mysqli_connection->query("INSERT INTO alunni(nome,cognome,codiceF) VALUES('$nome','$cognome','$codiceF')");
 
     if($result){
       $response->getBody()->write("{'status':'created'}");
@@ -48,15 +49,16 @@ class AlunniController
     return $response->withHeader("Content-type", "application/json")->withStatus(201);
   }
 
-  /*curl -X PUT localhost:8080/alunni/2 --data '{"nome":"gaia","cognome":"bottai"}' -H "Content-Type:application/json"*/
+  /*curl -X PUT localhost:8080/alunni/4 --data '{"nome":"gaia","cognome":"bottai,"codiceF":"kkkkkkkkkkkkkkk"}' -H "Content-Type:application/json"*/
   public function update(Request $request, Response $response, $args){
     $id = $args['id'];
     $mysqli_connection = new MySQLi('my_mariadb', 'root', 'ciccio', 'scuola');
     $body=json_decode($request->getbody()->getContents(), true);
     $nome= $body["nome"];
     $cognome=$body["cognome"];
+    $codiceF=$body["codiceF"];
 
-    $result = $mysqli_connection->query("UPDATE alunni SET nome='$nome',cognome='$cognome' WHERE id=$id");
+    $result = $mysqli_connection->query("UPDATE alunni SET nome='$nome',cognome='$cognome', codiceF='$codiceF' WHERE id=$id");
 
     if($result){
       $response->getBody()->write("{'status':'ok'}");
